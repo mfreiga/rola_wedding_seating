@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F6F2EC">
+  <meta name="format-detection" content="telephone=no">
+  <title>Rola &amp; Marco · Find your table</title>
+  <meta name="description" content="Find your table at Rola &amp; Marco's wedding.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F6F2EC' stroke='%237A5656' stroke-width='2'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-style='italic' text-anchor='middle' fill='%237A5656'%3ER%26amp;M%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/pinyon-script-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+
+    <header class="hero">
+      <p class="eyebrow">Find your table</p>
+      <h1 class="couple" id="couple">Rola &amp; Marco</h1>
+      <svg class="flourish" viewBox="0 0 240 24" aria-hidden="true">
+        <path d="M4 12 H96" />
+        <path d="M144 12 H236" />
+        <path d="M100 12 C108 2, 116 2, 120 12 C124 22, 132 22, 140 12" />
+        <circle cx="120" cy="12" r="2.2" />
+      </svg>
+      <p class="date" id="date">Saturday, 7 November 2026</p>
+      <p class="venue" id="venue" hidden></p>
+    </header>
+
+    <section class="finder" aria-labelledby="finder-title">
+      <h2 id="finder-title" class="visually-hidden">Search for your name</h2>
+
+      <div id="remembered" class="remembered" hidden></div>
+
+      <form class="search" role="search" autocomplete="off" onsubmit="return false">
+        <label for="q" class="search-label">Your first or last name</label>
+        <div class="search-field">
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
+          <input id="q" name="q" type="search"
+                 placeholder="e.g. Rola, Rossi, Moha…"
+                 autocomplete="off" autocorrect="off" autocapitalize="words"
+                 spellcheck="false" enterkeyhint="search" maxlength="60"
+                 aria-describedby="status" aria-controls="results">
+          <button type="button" class="clear" id="clear" aria-label="Clear search" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <p id="status" class="status" aria-live="polite">Even part of your name works.</p>
+      <div id="results" class="results"></div>
+    </section>
+
+    <section class="panel welcome" id="welcome" hidden>
+      <h2 class="panel-title" id="welcome-title">Welcome</h2>
+      <div class="welcome-text" id="welcome-text"></div>
+      <p class="signature" id="welcome-signature"></p>
+      <ul class="info-chips" id="welcome-extras"></ul>
+    </section>
+
+    <section class="panel schedule" id="schedule" hidden>
+      <h2 class="panel-title" id="schedule-title">The Evening</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <footer class="foot">
+      <p>No app and no sign-in needed. Just search your name.</p>
+      <p class="monogram" aria-hidden="true">R <span>&amp;</span> M</p>
+    </footer>
+  </main>
+
+  <noscript>
+    <p class="noscript">Please enable JavaScript to search, or ask at the welcome desk for your table.</p>
+  </noscript>
+
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
