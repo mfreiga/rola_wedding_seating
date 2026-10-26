@@ -252,23 +252,16 @@ body {
 .tips li { padding-left: 20px; position: relative; }
 .tips li::before { content: "❧"; position: absolute; left: 0; color: var(--rose); }
 
-/* ───────── Remembered seat ───────── */
-.remembered {
-  position: relative; z-index: 1;
-  margin: -4px 0 14px; text-align: center; font-size: 17px; color: var(--ink-soft);
-}
-.remembered b { color: var(--mauve-deep); font-weight: 600; }
-
 /* ───────── Panels (welcome, schedule) ───────── */
 .panel {
-  margin-top: 30px;
+  margin-top: 26px;
   text-align: center;
   padding: 0 6px;
 }
 .panel-title {
   margin: 0 0 6px;
   font-family: var(--script); font-weight: 400;
-  font-size: 46px; line-height: 1.2; color: var(--mauve);
+  font-size: 40px; line-height: 1.15; color: var(--mauve);
 }
 .welcome-text p { margin: 0 0 10px; font-size: 20px; }
 .signature { margin: 4px 0 0; font-style: italic; color: var(--mauve); font-weight: 500; }
@@ -279,29 +272,29 @@ body {
 }
 .info-chips b { color: var(--ink); font-weight: 600; }
 
-.timeline { list-style: none; margin: 14px auto 0; padding: 0; max-width: 360px; text-align: left; }
+.timeline { list-style: none; margin: 6px auto 0; padding: 0; max-width: 340px; text-align: left; }
 .timeline li {
-  display: grid; grid-template-columns: 76px 1fr; column-gap: 20px; align-items: center;
-  padding: 12px 0;
+  display: grid; grid-template-columns: 46px 1fr; column-gap: 14px; align-items: center;
+  padding: 5px 0;
 }
 .timeline li + li { border-top: 1px solid var(--rose-soft); }
 .t-icon {
-  width: 76px; height: 76px; color: var(--ink-soft);
-  fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round;
-  border-radius: 50%; padding: 4px;
+  width: 46px; height: 46px; color: var(--ink-soft);
+  fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  border-radius: 50%; padding: 2px;
   transition: background .3s, color .3s;
 }
-.t-dot { display: block; width: 12px; height: 12px; margin: 0 auto; padding: 0; border: 1.5px solid var(--mauve); }
+.t-dot { display: block; width: 10px; height: 10px; margin: 0 auto; padding: 0; border: 1.5px solid var(--mauve); }
+.t-body { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .timeline time {
-  display: inline-block; font-size: 24px; font-weight: 500; color: var(--ink);
-  font-variant-numeric: lining-nums; white-space: nowrap; letter-spacing: .01em;
+  flex: none; min-width: 66px; font-size: 17px; font-weight: 600; color: var(--ink);
+  font-variant-numeric: lining-nums; white-space: nowrap;
 }
-.t-title { display: block; font-size: 21px; color: var(--mauve); line-height: 1.25; }
-.t-note { display: block; font-size: 16px; color: var(--ink-soft); font-style: italic; font-weight: 400; }
+.t-title { font-size: 19px; color: var(--mauve); line-height: 1.25; }
+.t-note { flex-basis: 100%; font-size: 15px; color: var(--ink-soft); font-style: italic; font-weight: 400; margin-left: 76px; }
 .t-now {
-  display: inline-block; margin-left: 8px; vertical-align: 3px;
-  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
-  color: var(--card); background: var(--mauve); border-radius: 999px; padding: 2px 9px;
+  order: 3; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600;
+  color: var(--card); background: var(--mauve); border-radius: 999px; padding: 1px 8px; align-self: center;
 }
 .timeline li.is-now .t-icon { background: var(--rose-soft); color: var(--mauve-deep); }
 

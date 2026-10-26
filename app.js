@@ -5,7 +5,6 @@
   var CFG = window.WEDDING || {};
   var MAX_LIST = 8;          // how many matches to list before asking for more letters
   var MIN_CHARS = 2;         // letters needed before searching
-  var STORE_KEY = "rm-seat";
 
   var $ = function (id) { return document.getElementById(id); };
   var input = $("q"), statusEl = $("status"), resultsEl = $("results"), clearBtn = $("clear");
@@ -267,7 +266,6 @@
           ? '<p class="seat-number">' + esc(t.value) + "</p>"
           : '<p class="seat-number is-text">' + esc(t.value) + "</p>") +
         (t.name ? '<p class="seat-tablename">' + esc(t.name) + "</p>" : "");
-      remember(g);
     }
     html += '<div class="seat-actions">' +
       (fromList ? '<button type="button" class="link-btn" id="back">Not you? Back to the list</button>' : "") +
@@ -380,23 +378,7 @@
     input.value = "";
     clearBtn.hidden = true;
     setIdle();
-    renderRemembered();
     if (focus) input.focus();
-  }
-
-  /* ───────────── "Your table" memory on this phone ───────────── */
-
-  function remember(g) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify({ name: g.display, table: g.table })); } catch (e) {}
-    renderRemembered();
-  }
-  function renderRemembered() {
-    var box = $("remembered"), saved = null;
-    try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) {}
-    if (!saved || !saved.table || input.value.trim()) { box.hidden = true; return; }
-    box.innerHTML = "Last search on this phone: <b>" + esc(saved.name) + "</b>, " +
-      esc(CFG.tableWord || "Table") + " <b>" + esc(saved.table) + "</b>";
-    box.hidden = false;
   }
 
   /* ───────────── Static content from config.js ───────────── */
@@ -466,7 +448,6 @@
 
   input.addEventListener("input", function () {
     clearBtn.hidden = !input.value;
-    $("remembered").hidden = true;
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(run, 120);
   });
@@ -483,6 +464,5 @@
   } catch (e) {}
 
   fillContent();
-  renderRemembered();
   load();
 })();
