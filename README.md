@@ -7,7 +7,7 @@ It needs no backend, database, or build step. Netlify serves the files as they a
 
 | File | What it is |
 |---|---|
-| `guests.csv` | **The guest list.** Currently a FAKE test list of 180 guests at 18 tables. Replace it with the real one. |
+| `guests.csv` | **The guest list**: one row per guest, sorted by table. |
 | `config.js` | All page text: date, welcome note, schedule, Wi-Fi, hashtag, who to ask for help. Look for `TODO`. |
 | `index.html`, `style.css`, `app.js` | The page itself. You shouldn't need to touch these. |
 | `fonts/` | Self-hosted fonts (Pinyon Script and Cormorant Garamond, both under the SIL Open Font License). |
@@ -16,13 +16,15 @@ It needs no backend, database, or build step. Netlify serves the files as they a
 ## Guest list format (`guests.csv`)
 
 ```
-first_name,last_name,table,aliases,note
-Mohamed,Ali,3,Mohammed|Muhammad,Groom's uncle
-Mohamed,Ali,11,Mohammed|Muhammad,Bride's cousin
-Sean,O'Brien,7,,
+table,group,first_name,last_name,aliases,note
+3,High Table · Rola Friends,Johanna,Boehm,Böhm,
+4,High Table · Rola Friends,Sara,Tennis,Sarah,
+
+5,High Table · Rola Friends,Hania +1,,,Guest of Hania Mostafa
 ```
 
-- **One row per person.** Couples and families are separate rows.
+- **One row per person.** Couples and families are separate rows. The list is sorted by table, with a blank row between tables.
+- `group` is only for you (e.g. "Rola Friends"). Guests never see it.
 - `table` holds a number (`7`) or a name (`Jasmine`). Leave it empty and the guest sees "being finalised, please ask the welcome desk".
 - `aliases` (optional) lists other spellings or nicknames, separated by `|`. Guests can search with any of them.
 - `note` (optional) is shown under the name. Use it only to tell apart people who share a name.

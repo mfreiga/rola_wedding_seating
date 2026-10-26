@@ -371,7 +371,8 @@
     if (!matches.length) renderNotFound(q);
     else if (matches.length === 1) showSeat(matches[0].g, false);
     // full name typed ("marco rossi") and exactly one person has it → go straight to the seat
-    else if (tokens(q).length >= 2 && exact.length === 1) showSeat(exact[0].g, false);
+    else if (tokens(q).length >= 2 && exact.length === 1 &&
+             tokens(q).indexOf(exact[0].g.nameTokens[0]) !== -1) showSeat(exact[0].g, false);
     else renderList(matches, q);
   }
 
