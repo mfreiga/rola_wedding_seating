@@ -448,8 +448,14 @@
         mins.forEach(function (v, i) { if (v !== null && v <= sinceStart) current = i; });
       }
       $("timeline").innerHTML = s.items.map(function (it, i) {
-        return '<li class="' + (i === current ? "is-now" : "") + '"><time>' + esc(it.time || "") + "</time>" +
-          '<span><span class="t-title">' + esc(it.title || "") + "</span>" +
+        var icons = window.TIMELINE_ICONS || {};
+        var svg = icons[it.icon]
+          ? '<svg class="t-icon" viewBox="0 0 64 64" aria-hidden="true">' + icons[it.icon] + "</svg>"
+          : '<span class="t-icon t-dot" aria-hidden="true"></span>';
+        return '<li class="' + (i === current ? "is-now" : "") + '">' + svg +
+          '<span class="t-body"><time>' + esc(it.time || "") + "</time>" +
+          (i === current ? '<span class="t-now">Now</span>' : "") +
+          '<span class="t-title">' + esc(it.title || "") + "</span>" +
           (it.note ? '<span class="t-note">' + esc(it.note) + "</span>" : "") + "</span></li>";
       }).join("");
       $("schedule").hidden = false;

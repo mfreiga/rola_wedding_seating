@@ -37,12 +37,13 @@ window.WEDDING = {
     show: true,
     title: "The Evening",
     // Times can be "3:00 pm" or "15:00". Times after midnight are handled.
+    // icon: glasses | couple | cake | cloche | car  (or leave it out)
     items: [
-      { time: "3:00 pm",  title: "Cocktails & Snacks", note: "" },
-      { time: "4:00 pm",  title: "Entrance & First Dance", note: "" },
-      { time: "7:30 pm",  title: "Cake Cutting & Toasts", note: "" },
-      { time: "8:00 pm",  title: "Buffet", note: "" },
-      { time: "12:00 am", title: "Carriages", note: "" }
+      { time: "3:00 pm",  title: "Cocktails & Snacks", note: "", icon: "glasses" },
+      { time: "4:00 pm",  title: "Entrance & First Dance", note: "", icon: "couple" },
+      { time: "7:30 pm",  title: "Cake Cutting & Toasts", note: "", icon: "cake" },
+      { time: "8:00 pm",  title: "Buffet", note: "", icon: "cloche" },
+      { time: "12:00 am", title: "Carriages", note: "", icon: "car" }
     ]
   },
 

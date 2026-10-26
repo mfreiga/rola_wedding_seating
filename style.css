@@ -279,24 +279,31 @@ body {
 }
 .info-chips b { color: var(--ink); font-weight: 600; }
 
-.timeline {
-  list-style: none; margin: 10px auto 0; padding: 0; max-width: 380px; text-align: left;
-  position: relative;
+.timeline { list-style: none; margin: 14px auto 0; padding: 0; max-width: 360px; text-align: left; }
+.timeline li {
+  display: grid; grid-template-columns: 76px 1fr; column-gap: 20px; align-items: center;
+  padding: 12px 0;
 }
-.timeline::before {
-  content: ""; position: absolute; left: 98px; top: 10px; bottom: 10px;
-  width: 1px; background: linear-gradient(var(--rose), var(--rose-soft));
+.timeline li + li { border-top: 1px solid var(--rose-soft); }
+.t-icon {
+  width: 76px; height: 76px; color: var(--ink-soft);
+  fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round;
+  border-radius: 50%; padding: 4px;
+  transition: background .3s, color .3s;
 }
-.timeline li { display: grid; grid-template-columns: 84px 1fr; column-gap: 28px; padding: 9px 0; position: relative; }
-.timeline li::before {
-  content: ""; position: absolute; left: 94px; top: 19px;
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--card); border: 1.5px solid var(--mauve);
+.t-dot { display: block; width: 12px; height: 12px; margin: 0 auto; padding: 0; border: 1.5px solid var(--mauve); }
+.timeline time {
+  display: inline-block; font-size: 24px; font-weight: 500; color: var(--ink);
+  font-variant-numeric: lining-nums; white-space: nowrap; letter-spacing: .01em;
 }
-.timeline li.is-now::before { background: var(--mauve); box-shadow: 0 0 0 4px rgba(122,86,86,.18); }
-.timeline time { white-space: nowrap; text-align: right; font-weight: 600; color: var(--mauve); font-variant-numeric: lining-nums tabular-nums; }
-.timeline .t-title { font-size: 20px; }
-.timeline .t-note { display: block; font-size: 16px; color: var(--ink-soft); font-style: italic; font-weight: 400; }
+.t-title { display: block; font-size: 21px; color: var(--mauve); line-height: 1.25; }
+.t-note { display: block; font-size: 16px; color: var(--ink-soft); font-style: italic; font-weight: 400; }
+.t-now {
+  display: inline-block; margin-left: 8px; vertical-align: 3px;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+  color: var(--card); background: var(--mauve); border-radius: 999px; padding: 2px 9px;
+}
+.timeline li.is-now .t-icon { background: var(--rose-soft); color: var(--mauve-deep); }
 
 /* ───────── Footer ───────── */
 .foot { margin-top: 38px; text-align: center; color: var(--ink-soft); font-size: 15px; }
