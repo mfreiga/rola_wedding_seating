@@ -40,7 +40,6 @@ table,group,first_name,last_name,aliases,note
 - German spellings: Müller = muller = mueller, Groß = gross.
 - Typos and sound-alikes get "Did you mean…" suggestions (Rosi → Rossi, Mahmod → Mahmoud, Muhammad → Mohamed).
 - More than 8 matches asks for more letters. Numbers, emoji and Arabic script get a friendly hint.
-- The phone remembers the last table found, so a guest reopening the page sees it straight away.
 - `?name=Rossi` in the URL pre-fills the search.
 
 ## Preview locally
