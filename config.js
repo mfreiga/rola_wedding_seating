@@ -56,7 +56,7 @@ window.WEDDING = {
       "Mickel Freiga": "Table 1. Built this website instead of writing his speech. Tips accepted at the bar.",
       "Raouf Freiga": "Table 1. The man who made the bride. Tonight\u2019s success is partly your fault.",
       "Nardine Aboukalam": "Table 14, but sitting is not in your job description tonight. Rola\u2019s orders.",
-      "Jessy Saroufim": "Table 14, but sitting is not in your job description tonight. Rola\u2019s orders."
+      "Jessica Saroufim": "Table 14, but sitting is not in your job description tonight. Rola\u2019s orders."
     },
     // searching "brother" or "who made this" shows this
     credit: "This app was lovingly built by the bride\u2019s brother. Complaints go to the groom.",
