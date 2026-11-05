@@ -355,6 +355,25 @@ html.po-open, html.po-open body { overflow: hidden; }
 
 .noscript { text-align: center; padding: 16px; }
 
+/* tap hint on the first name in the list (shown once per visit) */
+.result { position: relative; }
+.result.hint { animation: hintglow 1.5s ease-in-out 2; border-color: var(--rose); }
+@keyframes hintglow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(122,86,86,0); }
+  45% { box-shadow: 0 0 0 6px rgba(201,169,166,.45), 0 4px 18px rgba(122,86,86,.18); }
+}
+.tap-ripple {
+  position: absolute; left: 46%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px;
+  border-radius: 50%; background: rgba(122,86,86,.35); pointer-events: none;
+  animation: taprip 1.5s ease-out 2;
+}
+@keyframes taprip {
+  0% { transform: scale(.3); opacity: 0; }
+  20% { transform: scale(.55); opacity: 1; }
+  70% { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {

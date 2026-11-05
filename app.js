@@ -378,7 +378,8 @@
 
   function renderList(matches, q) {
     var shown = matches.slice(0, MAX_LIST);
-    statusEl.textContent = matches.length === 1 ? "Is this you? Tap your name." : matches.length + " guests match \u2014 tap your name.";
+    statusEl.textContent = matches.length === 1 ? "Is this you? Tap your name to see where your table is."
+      : "Tap your name to see where your table is.";
     var html = '<ul class="result-list">' + shown.map(function (m, i) {
       var t = tableInfo(m.g);
       // explain *why* it matched when the typed name was one of the aliases ("Yusuf" → Youssef)
@@ -399,8 +400,28 @@
     }
     resultsEl.innerHTML = html;
     Array.prototype.forEach.call(resultsEl.querySelectorAll(".result"), function (btn) {
-      btn.onclick = function () { showSeat(shown[+btn.getAttribute("data-i")].g, true); };
+      btn.onclick = function () { hintShown = true; showSeat(shown[+btn.getAttribute("data-i")].g, true); };
     });
+    scheduleTapHint();
+  }
+
+  // Tap hint: once per visit, after the list has stayed on screen for a moment,
+  // the first name glows softly and shows a "tap" ripple so guests know the rows open.
+  var hintShown = false, hintTimer = null;
+  function scheduleTapHint() {
+    clearTimeout(hintTimer);
+    if (hintShown) return;
+    hintTimer = setTimeout(function () {
+      var first = resultsEl.querySelector(".result");
+      if (!first || hintShown) return;
+      hintShown = true;
+      first.classList.add("hint");
+      first.insertAdjacentHTML("beforeend", '<span class="tap-ripple" aria-hidden="true"></span>');
+      setTimeout(function () {
+        first.classList.remove("hint");
+        var r = first.querySelector(".tap-ripple"); if (r) r.parentNode.removeChild(r);
+      }, 3200);
+    }, 900);
   }
 
   function renderNotFound(q) {
