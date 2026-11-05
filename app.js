@@ -384,12 +384,8 @@
       : "Tap your name to see where your table is.";
     var html = '<ul class="result-list">' + shown.map(function (m, i) {
       var t = tableInfo(m.g);
-      // explain *why* it matched when the typed name was one of the aliases ("Yusuf" → Youssef)
-      var qts = tokens(q);
-      var viaAlias = m.g.aliases.length &&
-        qts.some(function (qt) { return tokenScore(qt, m.g.nameTokens) === 0 && tokenScore(qt, tokens(m.g.aliases.join(" "))) > 0; });
-      var sub = m.g.note ? '<span class="result-alias">' + esc(m.g.note) + "</span>"
-              : (viaAlias ? '<span class="result-alias">also: ' + esc(m.g.aliases.join(", ")) + "</span>" : "");
+      // other spellings (aliases) still match, but only the real name is shown; notes like "Guest of …" stay
+      var sub = m.g.note ? '<span class="result-alias">' + esc(m.g.note) + "</span>" : "";
       return '<li><button type="button" class="result" data-i="' + i + '">' +
         '<span class="result-name">' + highlight(m.g.display, q) + sub + "</span>" +
         '<span class="result-table"><small>' + esc(CFG.tableWord || "Table") + "</small>" +
