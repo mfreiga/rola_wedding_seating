@@ -22,8 +22,6 @@ table,group,first_name,last_name,aliases,note
 2,Marco Parents Friends,David,Nashaat,,
 2,Marco Parents Friends,Ossama,Nashaat,Osama|Oussama,
 2,Marco Parents Friends,Lydia,Nashaat,,
-2,Marco Parents Friends,Husband Lydia,,,Lydia Nashaat's husband
-2,Marco Parents Friends,Wife Ossama,,,Ossama Nashaat's wife
 2,Marco Parents Friends,Laila,Nashaat,,
 
 3,Friends Marco Parents,Habib,Kauzman,,
@@ -48,8 +46,10 @@ table,group,first_name,last_name,aliases,note
 4,Rola Friends Parents,Rozy,Achaia,Rosie|Rosy,
 4,Rola Friends Parents,Fady,Diaa,Fadi,
 
-5,Freiga Friends,George,Bassem,,
-5,Freiga Friends,Mourine,Bassem,,
+5,Freiga Friends,Jemi,Farouk,,
+5,Freiga Friends,Julie,Boshra,,
+5,Freiga Friends,Joice,Jemi,Joyce,
+5,Freiga Friends,George,Jemi,,
 5,Freiga Friends,Joustina,Rashad,Justina,
 5,Freiga Friends,Bassem,Rashad,,
 5,Freiga Friends,Farag,Rashad,,
@@ -70,14 +70,12 @@ table,group,first_name,last_name,aliases,note
 
 7,Freiga Friends,Bassem,Farouk,,
 7,Freiga Friends,Sherry,Ezat,,
+7,Freiga Friends,George,Bassem,,
+7,Freiga Friends,Mourine,Bassem,,
 7,Freiga Friends,Marla,Bassem,,
 7,Freiga Friends,Ashraf,Prince,,
 7,Freiga Friends,Jucy,Magdi,Juicy,
 7,Freiga Friends,Fadi,Ashraf,Fady,
-7,Freiga Friends,Jemi,Farouk,,
-7,Freiga Friends,Julie,Boshra,,
-7,Freiga Friends,Joice,Jemi,Joyce,
-7,Freiga Friends,George,Jemi,,
 
 8,Freiga Work,Mohamed,Shaaban,Mohammed|Muhammad,
 8,Freiga Work,Marwa,El Helaly,,
@@ -91,7 +89,7 @@ table,group,first_name,last_name,aliases,note
 9,Freiga Family,Nada,Sarrouf,,
 9,Freiga Family,Dena,Sarrouf,,
 9,Freiga Family,Ramy,Sarrouf,,
-9,Freiga Family,Sami,Sameh,,
+9,Freiga Family,Sami,Hanna,,
 9,Freiga Family,Rana,Sarrouf,,
 9,Freiga Family,Sameh,Hanna,,
 9,Freiga Family,Simon,Chahine,,
@@ -100,15 +98,15 @@ table,group,first_name,last_name,aliases,note
 9,Freiga Family,Walid,Shakour,,
 
 10,Freiga Family,Laurice,Nasser,,
-10,Freiga Family,Rafik,Raouf,Rafiq,
+10,Freiga Family,Rafik,Raouf Salah El Din,Rafiq,
 10,Freiga Family,Malaka,,,
 10,Freiga Family,Farida,Rafik,,
 10,Freiga Family,George,Rafik,,
 10,Freiga Family,Raouf,Rafik,,
-10,Freiga Family,Raimon,Raouf,Raymond,
+10,Freiga Family,Raimon,Raouf Salah El Din,Raymond,
 10,Freiga Family,Nermine,,Nermin,
 10,Freiga Family,Hani,Shakour,,
-10,Freiga Family,Lilian,,Lillian,
+10,Freiga Family,Lilian,Shakour,Lillian,
 
 11,Family Table Marco Mama,George,Taza,,
 11,Family Table Marco Mama,Miriam,Massad,Mariam|Maryam,
@@ -127,7 +125,6 @@ table,group,first_name,last_name,aliases,note
 12,Mickel Friends,Youssef,Fawzy,Yousef|Yusuf,
 12,Mickel Friends,Kareem,Kaffafy,Karim|Kaffafi,
 12,Mickel Friends,Seif,Fahmy,Saif,
-12,Mickel Friends,Youssef Fawzy +1,,,Guest of Youssef Fawzy
 
 13,High Table · Marco Friends,Suzy,Kauzman,Susie,
 13,High Table · Marco Friends,Marvin,Maher,,
@@ -187,7 +184,6 @@ table,group,first_name,last_name,aliases,note
 18,Rola Friends,Mariam,Riad,Maryam|Miriam,
 18,Rola Friends,Haya,Elsaid,El Said,
 18,Rola Friends,Hania,Mostafa,Hanya,
-18,Rola Friends,Hania +1,,,Guest of Hania Mostafa
 18,Rola Friends,Hend,Ismail,,
 18,Rola Friends,Shoshana,Kollmann,,
-18,Rola Friends,Shoshana +1,,,Guest of Shoshana Kollmann
+18,Rola Friends,Khaled,Ahmed,,
