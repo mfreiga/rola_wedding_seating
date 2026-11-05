@@ -350,7 +350,38 @@ html.po-open, html.po-open body { overflow: hidden; }
 /* ───────── Footer ───────── */
 .foot { margin-top: 38px; text-align: center; color: var(--ink-soft); font-size: 15px; }
 .foot p { margin: 0; }
-.monogram { margin-top: 10px !important; font-family: var(--script); font-size: 34px; color: var(--rose); }
+.monogram {
+  margin-top: 10px; font-family: var(--script); font-size: 34px; color: var(--rose);
+  background: none; border: 0; padding: 4px 14px; cursor: pointer; line-height: 1.2;
+  -webkit-tap-highlight-color: transparent; transition: transform .15s, color .2s;
+}
+.monogram:active { transform: scale(.92); color: var(--mauve); }
+.monogram:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; border-radius: 10px; }
+.credit { margin: 6px auto 0 !important; max-width: 300px; font-size: 13px; font-style: italic; line-height: 1.4; color: var(--ink-soft); opacity: .62; }
+
+/* easter eggs */
+.seat-egg { margin: 12px auto 0; max-width: 300px; font-size: 17px; font-style: italic; color: var(--mauve); line-height: 1.4; }
+.egg-card { margin-top: 14px; text-align: center; padding: 18px 16px; border-radius: 16px; background: linear-gradient(180deg, rgba(233,218,214,.55), rgba(233,218,214,.15)); border: 1px solid var(--rose-soft); animation: rise .4s ease both; }
+.egg-card p { margin: 0; font-size: 19px; font-style: italic; color: var(--mauve-deep); }
+.egg-card .egg-mark { font-style: normal; font-size: 22px; color: var(--rose); margin-bottom: 4px; }
+.confetti {
+  position: fixed; z-index: 60; width: 9px; height: 13px; margin: -6px 0 0 -4px; pointer-events: none;
+  animation: confetti 1.9s cubic-bezier(.15,.7,.35,1) both;
+}
+@keyframes confetti {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translate(var(--dx), calc(var(--dy) + 260px)) rotate(var(--rot)); opacity: 0; }
+}
+.egg-toast {
+  position: fixed; z-index: 59; left: 50%; top: 34%;
+  width: min(340px, calc(100vw - 32px)); transform: translateX(-50%);
+  background: var(--card); border: 1px solid var(--rose-soft); border-radius: 18px; box-shadow: var(--shadow);
+  padding: 16px 18px; text-align: center; animation: toastin .45s cubic-bezier(.2,.7,.2,1) both; cursor: pointer;
+}
+.egg-toast p { margin: 0; font-size: 19px; font-style: italic; color: var(--mauve-deep); line-height: 1.4; }
+.egg-toast.is-out { opacity: 0; transition: opacity .5s; }
+@keyframes toastin { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
 .monogram span { font-size: .8em; }
 
 .noscript { text-align: center; padding: 16px; }

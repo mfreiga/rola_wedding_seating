@@ -47,7 +47,17 @@ window.WEDDING = {
     ]
   },
 
-  // Reserved for a later floor plan with the guest's table highlighted.
-  // Leave as null for now.
-  floorPlan: null
+  // Little surprises from the bride's brother.
+  easterEggs: {
+    // shown on the seat card of these guests (name exactly as in guests.csv)
+    notes: {
+      "Rola": "You\u2019re the bride. Your table is wherever you want it to be. (It\u2019s table 1. Go.)",
+      "Marco": "Table 1, right next to the most beautiful woman here. I\u2019m watching you. \u2014 Her brother",
+      "Mickel Freiga": "Table 1. Built this website instead of writing his speech. Tips accepted at the bar."
+    },
+    // searching "brother" or "who made this" shows this
+    credit: "This app was lovingly built by the bride\u2019s brother. Complaints go to the groom.",
+    // tapping the R & M monogram at the bottom
+    monogram: "Rola, I couldn\u2019t be prouder of you. Marco, welcome to the family. No refunds. \u2014 Your brother \u2665"
+  }
 };

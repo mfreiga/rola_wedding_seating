@@ -359,6 +359,8 @@
           ? '<p class="seat-number">' + esc(t.value) + "</p>"
           : '<p class="seat-number is-text">' + esc(t.value) + "</p>") +
         (t.name ? '<p class="seat-tablename">' + esc(t.name) + "</p>" : "");
+      var egg = ((CFG.easterEggs || {}).notes || {})[g.display];
+      if (egg) html += '<p class="seat-egg">' + esc(egg) + "</p>";
       if (t.isNumber && planText) {
         html += '<div class="plan" id="plan"><div class="plan-frame" id="plan-frame"></div>' +
           '<p class="plan-caption">Your table is highlighted · tap the plan to enlarge</p></div>';
@@ -470,6 +472,12 @@
       return;
     }
     var n = norm(q);
+    var credit = (CFG.easterEggs || {}).credit;
+    if (credit && (n === "brother" || n === "the brother" || /^who (made|built|created) (this|it|the)/.test(n))) {
+      statusEl.textContent = "";
+      resultsEl.innerHTML = '<div class="egg-card"><p class="egg-mark" aria-hidden="true">\u2665</p><p>' + esc(credit) + "</p></div>";
+      return;
+    }
     if (!n) {
       resultsEl.innerHTML = "";
       statusEl.textContent = "Please type the letters of your name.";
@@ -491,6 +499,8 @@
     // one confident match (start of a name, or the full name) → straight to the seat; a weak one is listed
     else if (matches.length === 1 && matches[0].strong) showSeat(matches[0].g, false);
     else if (tokens(q).length >= 2 && fullName.length === 1) showSeat(fullName[0].g, false);
+    // a one-word full name ("Marco", "Iman") that nobody else has as an exact word → straight there
+    else if (fullName.length === 1 && exact.length === 1 && exact[0] === fullName[0]) showSeat(fullName[0].g, false);
     // full name typed ("marco rossi") and exactly one person has it → go straight to the seat
     else if (tokens(q).length >= 2 && exact.length === 1 &&
              tokens(q).indexOf(exact[0].g.nameTokens[0]) !== -1) showSeat(exact[0].g, false);
@@ -585,6 +595,42 @@
     var pre = new URLSearchParams(location.search).get("name");
     if (pre) { input.value = pre.slice(0, 60); clearBtn.hidden = false; }
   } catch (e) {}
+
+  /* ───────────── Monogram surprise: confetti + a note ───────────── */
+  function monogramSurprise() {
+    var msg = (CFG.easterEggs || {}).monogram;
+    if (!msg) return;
+    var mono = $("monogram"), r = mono.getBoundingClientRect();
+    var ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+    var colors = ["#C9A9A6", "#7A5656", "#E9DAD6", "#D4B08C", "#B98B87", "#F3E6E1"];
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!still) {
+      for (var i = 0; i < 110; i++) {
+        var c = document.createElement("span");
+        c.className = "confetti";
+        var a = (-90 + (Math.random() - .5) * 150) * Math.PI / 180, v = 220 + Math.random() * 380;
+        c.style.left = ox + "px"; c.style.top = oy + "px";
+        c.style.background = colors[i % colors.length];
+        c.style.setProperty("--dx", (Math.cos(a) * v).toFixed(0) + "px");
+        c.style.setProperty("--dy", (Math.sin(a) * v).toFixed(0) + "px");
+        c.style.setProperty("--rot", (Math.random() * 720 - 360).toFixed(0) + "deg");
+        c.style.animationDelay = (Math.random() * .12).toFixed(2) + "s";
+        if (i % 3 === 0) c.style.borderRadius = "50%";
+        document.body.appendChild(c);
+        (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 2200); })(c);
+      }
+    }
+    var old = document.querySelector(".egg-toast"); if (old) old.parentNode.removeChild(old);
+    var t = document.createElement("div");
+    t.className = "egg-toast"; t.setAttribute("role", "status");
+    t.innerHTML = "<p>" + esc(msg) + "</p>";
+    t.onclick = function () { if (t.parentNode) t.parentNode.removeChild(t); };
+    document.body.appendChild(t);
+    setTimeout(function () { t.classList.add("is-out"); setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 500); }, 7000);
+  }
+  if ($("monogram")) $("monogram").addEventListener("click", monogramSurprise);
+  var creditEl = $("credit");
+  if (creditEl && (CFG.easterEggs || {}).credit) creditEl.textContent = CFG.easterEggs.credit;
 
   fillContent();
   loadPlan();
