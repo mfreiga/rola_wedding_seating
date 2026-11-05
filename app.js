@@ -40,7 +40,7 @@
   // Mohamed / Muhammad / Mohammed → "mhmd", Youssef / Yusuf → "ysf", Ahmed / Ahmad → "ahmd"
   function skeleton(t) {
     if (!t) return "";
-    var s = t.replace(/ph/g, "f").replace(/ck/g, "k").replace(/q/g, "k").replace(/z/g, "s")
+    var s = t.replace(/ph/g, "f").replace(/ck/g, "k").replace(/c(?!h)/g, "k").replace(/q/g, "k").replace(/z/g, "s")
              .replace(/(.)\1+/g, "$1");
     return s[0] + s.slice(1).replace(/[aeiouy]/g, "").replace(/(.)\1+/g, "$1");
   }
@@ -64,7 +64,7 @@
     }
     return d[al][bl];
   }
-  function allowedTypos(len) { return len <= 4 ? 1 : len <= 7 ? 2 : 3; }
+  function allowedTypos(len) { return len <= 6 ? 1 : len <= 9 ? 2 : 3; }
 
   /* ───────────── CSV loading ───────────── */
 
@@ -144,6 +144,96 @@
     return out;
   }
 
+  /* ───────────── Seating plan (plan.svg, tables have id="t<number>") ───────────── */
+
+  var planText = null;
+  var SVGNS = "http://www.w3.org/2000/svg";
+  // The whole venue (building at the top to the amphitheater) — only the empty margins are trimmed.
+  var PLAN_BOX = [118, 0, 784, 472];
+  var MARK = 2.4;                                  // marker size in plan units (≈25px badge on a phone)
+
+  function loadPlan() {
+    fetch("plan.svg").then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (txt) { planText = txt; }).catch(function () {});
+  }
+
+  function mountPlan(num) {
+    var wrap = $("plan"), frame = $("plan-frame");
+    if (!wrap || !frame) return;
+    frame.innerHTML = planText;
+    var svg = frame.querySelector("svg");
+    var grp = svg && svg.querySelector("#t" + num);
+    if (!grp) { wrap.parentNode.removeChild(wrap); return; }
+    var cx = +grp.getAttribute("data-cx"), cy = +grp.getAttribute("data-cy");
+    svg.setAttribute("viewBox", PLAN_BOX.join(" "));
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.classList.add("has-active");
+    grp.classList.add("is-active");
+
+    // pulsing ring behind the table, then the table itself drawn on top, slightly enlarged
+    var ring = document.createElementNS(SVGNS, "circle");
+    ring.setAttribute("cx", cx); ring.setAttribute("cy", cy); ring.setAttribute("r", 34);
+    ring.setAttribute("class", "ring");
+    svg.appendChild(ring);
+    svg.appendChild(grp);
+    grp.setAttribute("transform", "translate(" + cx + " " + cy + ") scale(1.35) translate(" + (-cx) + " " + (-cy) + ")");
+
+    // number marker next to the table: above it if there is room, otherwise below / right / left
+    var bb = grp.getBBox();
+    var hw = bb.width * 1.35 / 2, hh = bb.height * 1.35 / 2;
+    var bcx = bb.x + bb.width / 2, bcy = bb.y + bb.height / 2;
+    var len = 42 * MARK, rad = 15 * MARK, B = PLAN_BOX;
+    var spots = [                                  // [anchor x, anchor y, direction x, direction y]
+      [bcx, bcy - hh - 2, 0, -1], [bcx, bcy + hh + 2, 0, 1],
+      [bcx + hw + 2, bcy, 1, 0], [bcx - hw - 2, bcy, -1, 0]];
+    var fits = function (p) {
+      var fx = p[0] + p[2] * len, fy = p[1] + p[3] * len;
+      return fx - rad >= B[0] && fx + rad <= B[0] + B[2] && fy - rad >= B[1] && fy + rad <= B[1] + B[3];
+    };
+    var spot = spots.filter(fits)[0] || spots[0];
+    var ux = spot[2], uy = spot[3], px = -uy, py = ux;
+    var pt = function (along, side) { return (ux * along + px * side).toFixed(1) + " " + (uy * along + py * side).toFixed(1); };
+    var pin = document.createElementNS(SVGNS, "g");
+    pin.setAttribute("class", "pin");
+    pin.setAttribute("transform", "translate(" + spot[0].toFixed(1) + " " + spot[1].toFixed(1) + ") scale(" + MARK + ")");
+    pin.innerHTML =
+      '<path class="pin-body" d="M0 0 L' + pt(15, -7) + ' L' + pt(15, 7) + ' Z"/>' +
+      '<circle class="pin-face" cx="' + (ux * 27) + '" cy="' + (uy * 27) + '" r="15"/>' +
+      '<text class="pin-num" x="' + (ux * 27) + '" y="' + (uy * 27 + 6) + '" text-anchor="middle">' + esc(String(num)) + "</text>";
+    svg.appendChild(pin);
+
+    // tap the plan → full-screen view (turned sideways on an upright phone so it fills the screen)
+    frame.setAttribute("role", "button");
+    frame.setAttribute("tabindex", "0");
+    frame.setAttribute("aria-label", "Show the seating plan full screen");
+    frame.onclick = function () { openPlan(svg); };
+    frame.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPlan(svg); } };
+  }
+
+  function openPlan(svg) {
+    var ov = document.createElement("div");
+    ov.className = "plan-overlay";
+    ov.setAttribute("role", "dialog");
+    ov.setAttribute("aria-label", "Seating plan");
+    ov.innerHTML = '<div class="po-inner"></div>' +
+      '<p class="po-hint">Turn your phone sideways to read it upright</p>' +
+      '<button type="button" class="po-close" aria-label="Close the plan">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+    ov.querySelector(".po-inner").appendChild(svg.cloneNode(true));
+    var close = function () {
+      document.removeEventListener("keydown", onKey);
+      if (ov.parentNode) ov.parentNode.removeChild(ov);
+      document.documentElement.classList.remove("po-open");
+    };
+    var onKey = function (e) { if (e.key === "Escape") close(); };
+    ov.querySelector(".po-close").onclick = close;
+    ov.onclick = function (e) { if (e.target === ov) close(); };
+    document.addEventListener("keydown", onKey);
+    document.documentElement.classList.add("po-open");
+    document.body.appendChild(ov);
+    ov.querySelector(".po-close").focus();
+  }
+
   function load() {
     statusEl.textContent = "Loading the guest list…";
     fetch("guests.csv", { cache: "no-cache" })
@@ -173,6 +263,7 @@
       if (t === qt) return 3;
       if (t.indexOf(qt) === 0) best = Math.max(best, 2);
       else if (qt.length >= 3 && t.indexOf(qt) > 0) best = Math.max(best, 1);
+      else if (qt.length >= 5 && skeleton(qt).length >= 3 && skeleton(qt) === skeleton(t) && dist(qt, t) <= 2) best = Math.max(best, 0.8);
     }
     return best;
   }
@@ -181,21 +272,23 @@
     var qts = tokens(q), qc = compact(q);
     var matches = [];
     guests.forEach(function (g) {
-      var score = 0, exactAll = true, ok = true;
+      var score = 0, exactAll = true, ok = true, strong = true;
       for (var i = 0; i < qts.length; i++) {
         var s = tokenScore(qts[i], g.nameTokens);
         var sa = tokenScore(qts[i], g.aliasTokens) - 0.5;
         var best = Math.max(s, sa);
         if (best <= 0) { ok = false; break; }
         if (s !== 3) exactAll = false;
+        if (best < 1.5) strong = false;          // only part of a word matched (or a sound-alike)
         score += best;
       }
       // "marcorossi", "abdelaziz", "elsayed" → compare without spaces
       if (!ok && qc.length >= 4) {
         ok = g.compacts.some(function (c) { return c.indexOf(qc) !== -1; });
         score = 1; exactAll = false;
+        strong = g.compacts.some(function (c) { return c.indexOf(qc) === 0; });
       }
-      if (ok) matches.push({ g: g, score: score, exact: exactAll });
+      if (ok) matches.push({ g: g, score: score, exact: exactAll, strong: strong });
     });
     matches.sort(function (a, b) {
       return b.score - a.score || a.g.sortKey.localeCompare(b.g.sortKey);
@@ -215,7 +308,7 @@
         for (var j = 0; j < all.length; j++) {
           var t = all[j];
           var d = Math.min(dist(qt, t), dist(qt, t.slice(0, qt.length)) + 0.3);
-          if (qs.length >= 3 && qs === skeleton(t)) d = Math.min(d, 0.5 + 0.05 * dist(qt, t));
+          if ((qs.length >= 3 || (qt.length >= 7 && qs.length >= 2)) && qs === skeleton(t)) d = Math.min(d, 0.5 + 0.05 * dist(qt, t));
           if (d < best) best = d;
         }
         if (best > allowedTypos(qt.length)) return;
@@ -266,12 +359,17 @@
           ? '<p class="seat-number">' + esc(t.value) + "</p>"
           : '<p class="seat-number is-text">' + esc(t.value) + "</p>") +
         (t.name ? '<p class="seat-tablename">' + esc(t.name) + "</p>" : "");
+      if (t.isNumber && planText) {
+        html += '<div class="plan" id="plan"><div class="plan-frame" id="plan-frame"></div>' +
+          '<p class="plan-caption">Your table is highlighted · tap the plan to enlarge</p></div>';
+      }
     }
     html += '<div class="seat-actions">' +
       (fromList ? '<button type="button" class="link-btn" id="back">Not you? Back to the list</button>' : "") +
       '<button type="button" class="link-btn" id="again">Search another name</button></div></div>';
     resultsEl.innerHTML = html;
     statusEl.textContent = "";
+    if (t.isNumber && planText) mountPlan(t.value);
     if (fromList) $("back").onclick = function () { renderList(lastMatches, input.value); };
     $("again").onclick = function () { clearSearch(true); };
     var seat = $("seat");
@@ -280,7 +378,7 @@
 
   function renderList(matches, q) {
     var shown = matches.slice(0, MAX_LIST);
-    statusEl.textContent = matches.length + " guests match — tap your name.";
+    statusEl.textContent = matches.length === 1 ? "Is this you? Tap your name." : matches.length + " guests match \u2014 tap your name.";
     var html = '<ul class="result-list">' + shown.map(function (m, i) {
       var t = tableInfo(m.g);
       // explain *why* it matched when the typed name was one of the aliases ("Yusuf" → Youssef)
@@ -365,9 +463,13 @@
     var matches = search(q);
     lastMatches = matches;
     var exact = matches.filter(function (m) { return m.exact; });
+    var qcomp = compact(q);
+    var fullName = matches.filter(function (m) { return m.g.compacts[0] === qcomp; });
 
     if (!matches.length) renderNotFound(q);
-    else if (matches.length === 1) showSeat(matches[0].g, false);
+    // one confident match (start of a name, or the full name) → straight to the seat; a weak one is listed
+    else if (matches.length === 1 && matches[0].strong) showSeat(matches[0].g, false);
+    else if (tokens(q).length >= 2 && fullName.length === 1) showSeat(fullName[0].g, false);
     // full name typed ("marco rossi") and exactly one person has it → go straight to the seat
     else if (tokens(q).length >= 2 && exact.length === 1 &&
              tokens(q).indexOf(exact[0].g.nameTokens[0]) !== -1) showSeat(exact[0].g, false);
@@ -464,5 +566,6 @@
   } catch (e) {}
 
   fillContent();
+  loadPlan();
   load();
 })();

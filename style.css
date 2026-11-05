@@ -210,6 +210,55 @@ body {
   text-decoration: underline; text-decoration-color: var(--rose); text-underline-offset: 4px;
 }
 
+/* ───────── Seating plan in the seat card ───────── */
+.plan { margin: 16px -12px 0; }
+.plan-frame {
+  aspect-ratio: 784 / 472; width: 100%;
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--rose-soft); background: #F6F2EC;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.6);
+}
+.plan-frame svg { display: block; width: 100%; height: 100%; }
+.plan-svg .num { display: none; }            /* only the guest's own table gets a number (the pin) */
+.plan-svg .table { transition: opacity .6s ease; }
+.plan-svg.has-active .table:not(.is-active) { opacity: .26; }
+.plan-svg .pin-body { fill: var(--mauve-deep); }
+.plan-svg .pin-face { fill: var(--mauve-deep); stroke: #FFFDF9; stroke-width: 2.4; }
+.plan-svg .pin-num { fill: #fff; font-family: var(--serif); font-weight: 700; font-size: 17px; }
+.plan-svg .is-active.reg .top { fill: var(--mauve); stroke: var(--mauve-deep); }
+.plan-svg .is-active.high .top { fill: #4E6375; stroke: #33475A; }
+.plan-svg .is-active .ch { fill: var(--rose-soft); }
+.plan-svg .ring {
+  fill: none; stroke: var(--mauve); stroke-width: 3;
+  transform-box: fill-box; transform-origin: center;
+  animation: ringpulse 2s ease-out infinite;
+}
+@keyframes ringpulse { 0% { transform: scale(.55); opacity: .9; } 100% { transform: scale(1.35); opacity: 0; } }
+.plan-frame { cursor: zoom-in; }
+.plan-frame:focus-visible { outline: 2px solid var(--mauve); outline-offset: 2px; }
+.plan-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: #F6F2EC; animation: rise .25s ease both;
+}
+.po-inner { flex: none; width: min(96vw, calc(96vh * 784 / 472)); aspect-ratio: 784 / 472; }
+.po-inner svg { display: block; width: 100%; height: 100%; }
+@media (orientation: portrait) {
+  .po-inner { width: min(94vh, calc(94vw * 784 / 472)); transform: rotate(90deg); }
+}
+.po-close {
+  position: fixed; top: max(12px, env(safe-area-inset-top)); right: 12px;
+  width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--card); box-shadow: var(--shadow); cursor: pointer;
+  display: grid; place-items: center;
+}
+.po-close svg { width: 20px; height: 20px; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; fill: none; }
+html.po-open, html.po-open body { overflow: hidden; }
+.po-hint { display: none; position: fixed; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom));
+  margin: 0; text-align: center; font-size: 15px; font-style: italic; color: var(--ink-soft); }
+@media (orientation: portrait) { .po-hint { display: block; } }
+.plan-caption { margin: 8px 0 0; font-size: 15px; font-style: italic; color: var(--ink-soft); }
+
 /* ───────── Result list (several matches) ───────── */
 .result-list { list-style: none; margin: 12px 0 0; padding: 0; }
 .result-list li + li { margin-top: 8px; }

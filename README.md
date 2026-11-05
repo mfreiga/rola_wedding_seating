@@ -10,6 +10,7 @@ It needs no backend, database, or build step. Netlify serves the files as they a
 | `guests.csv` | **The guest list**: one row per guest, sorted by table. |
 | `config.js` | All page text: date, welcome note, schedule, Wi-Fi, hashtag, who to ask for help. Look for `TODO`. |
 | `index.html`, `style.css`, `app.js` | The page itself. You shouldn't need to touch these. |
+| `plan.svg` | The seating plan shown on the result card. Each table is a group with `id="t<number>"`, so the `table` numbers in `guests.csv` must match the plan numbers (1–19). |
 | `fonts/` | Self-hosted fonts (Pinyon Script and Cormorant Garamond, both under the SIL Open Font License). |
 | `netlify.toml`, `robots.txt` | Hosting settings: keep the page out of Google, and always serve the newest `guests.csv`. |
 
