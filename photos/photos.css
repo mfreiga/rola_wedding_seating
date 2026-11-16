@@ -86,7 +86,7 @@
 .thanks .thanks-title { margin: 0; font-family: var(--script); font-size: 46px; line-height: 1.1; color: var(--mauve); }
 
 .soon { margin: 0 auto; max-width: 420px; font-size: 18px; color: var(--ink-soft); font-style: italic; }
-.monogram-link { background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; display: inline-block; margin-top: 10px; font-family: var(--script); font-size: 34px; color: var(--rose); text-decoration: none; padding: 4px 14px; }
+.monogram-link { background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; display: inline-block; margin-top: 10px; font-family: var(--script); font-size: 44px; color: var(--mauve); text-decoration: none; padding: 6px 18px; }
 .monogram-link span { font-size: .8em; }
 
 /* ───────── private page ───────── */
@@ -122,3 +122,8 @@
 
 .monogram-link:active { transform: scale(.92); color: var(--mauve); }
 .monogram-link:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; border-radius: 10px; }
+.foot .credit { max-width: 320px; font-size: 15px; opacity: 1; color: var(--mauve); }
+@media (prefers-reduced-motion: no-preference) {
+  .monogram-link { animation: nudge 3.2s ease-in-out 2.5s 2; }
+  @keyframes nudge { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.12); } 24% { transform: scale(1); } }
+}
