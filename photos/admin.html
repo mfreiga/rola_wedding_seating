@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" class="admin">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Rola &amp; Marco · Photos (private)</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/photos/photos.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Private page</p>
+      <h1 class="couple">Rola &amp; Marco</h1>
+      <p class="date">Everything shared so far</p>
+    </header>
+
+    <p id="a-state" class="status">One moment…</p>
+
+    <div id="a-body" hidden>
+      <div class="a-bar">
+        <span><b id="a-count">0</b> files</span>
+        <span><b id="a-photos">0</b> photos</span>
+        <span><b id="a-videos">0</b> videos</span>
+        <span id="a-people-wrap"><b id="a-people">0</b> people</span>
+        <span><b id="a-used">0</b> of <span id="a-max"></span> used</span>
+      </div>
+      <div class="a-meter"><span id="a-fill"></span></div>
+
+      <div class="a-tools">
+        <button type="button" class="a-btn" id="a-uploads"></button>
+        <button type="button" class="a-btn" id="a-refresh">Refresh</button>
+        <button type="button" class="a-btn" id="a-selectall">Select all</button>
+        <button type="button" class="a-btn is-danger" id="a-delete" disabled>Delete selected</button>
+      </div>
+
+      <div id="a-grid" class="a-grid"></div>
+      <p id="a-empty" class="a-empty" hidden>Nothing has been uploaded yet.</p>
+    </div>
+  </main>
+  <script src="/photos/admin.js" defer></script>
+</body>
+</html>

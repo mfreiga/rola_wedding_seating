@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F6F2EC">
+  <title>Rola &amp; Marco · Share your photos</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23F6F2EC' stroke='%237A5656' stroke-width='2'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' font-style='italic' text-anchor='middle' fill='%237A5656'%3ER%26amp;M%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="/fonts/pinyon-script-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/photos/photos.css">
+</head>
+<body>
+  <main class="page">
+
+    <header class="hero">
+      <p class="eyebrow">Share your photos</p>
+      <h1 class="couple">Rola &amp; Marco</h1>
+      <svg class="flourish" viewBox="0 0 240 24" aria-hidden="true">
+        <path d="M4 12 H96" /><path d="M144 12 H236" />
+        <path d="M100 12 C108 2, 116 2, 120 12 C124 22, 132 22, 140 12" />
+        <circle cx="120" cy="12" r="2.2" />
+      </svg>
+      <p class="date">Saturday, 7 November 2026</p>
+    </header>
+
+    <section class="finder share" aria-labelledby="share-title">
+      <h2 id="share-title" class="visually-hidden">Upload photos and videos</h2>
+
+      <!-- shown while the page checks whether uploads are open -->
+      <p id="state" class="status">One moment…</p>
+
+      <div id="uploader" hidden>
+        <p class="lead">You saw the day from angles we never did. Add your photos and videos here, in full quality, so we can relive it together.</p>
+
+        <label for="who" class="search-label">Your name <span class="opt">(optional)</span></label>
+        <input id="who" class="text-field" type="text" maxlength="60" autocomplete="name" autocapitalize="words" placeholder="So we know who to thank">
+
+        <input id="picker" class="visually-hidden" type="file" accept="image/*,video/*" multiple>
+        <label for="picker" class="pick" id="pick">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V5M7.5 9.5L12 5l4.5 4.5M5 19h14"/></svg>
+          <span id="pick-label">Choose photos &amp; videos</span>
+        </label>
+        <p class="fine" id="fine">Pick as many as you like. Please keep this page open until everything shows a tick.</p>
+
+        <div id="summary" class="summary" hidden>
+          <div class="summary-bar"><span id="summary-fill"></span></div>
+          <p id="summary-text" aria-live="polite"></p>
+        </div>
+
+        <ul id="queue" class="queue"></ul>
+
+        <div id="thanks" class="thanks" hidden>
+          <p class="thanks-title">Thank you!</p>
+          <p id="thanks-text"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">The gallery</h2>
+      <p class="soon" id="soon">Opens soon. Once everyone has added their photos, you’ll be able to see them all here, and find the ones you’re in.</p>
+    </section>
+
+    <footer class="foot">
+      <a class="monogram-link" href="/" aria-label="Back to the wedding page">R <span>&amp;</span> M</a>
+    </footer>
+  </main>
+
+  <noscript><p class="noscript">Please enable JavaScript to share your photos.</p></noscript>
+  <script src="/photos/upload.js" defer></script>
+</body>
+</html>

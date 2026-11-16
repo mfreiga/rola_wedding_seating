@@ -63,3 +63,22 @@ Then open http://localhost:8000.
 ## Privacy note
 
 The page is hidden from search engines. Anyone who opens the link could still technically read `guests.csv`, which holds names and table numbers only. Don't put phone numbers or other personal data in it.
+
+## Photo sharing (`/photos`)
+
+Guests upload photos and videos in original quality at `/photos`. Files are stored in the Cloudflare R2 bucket bound to this Pages project as `PHOTOS`.
+
+| File | What it is |
+|---|---|
+| `photos/index.html`, `photos/upload.js`, `photos/photos.css` | The upload page guests see. |
+| `photos/admin.html`, `photos/admin.js` | Private page: see everything, close or reopen uploads, delete files. Open it as `/photos/admin?k=YOUR-KEY`. |
+| `functions/api/photos/[[path]].js` | The small server part (a Cloudflare Pages Function) that receives uploads and talks to storage. |
+| `_routes.json` | Tells Cloudflare that only `/api/*` needs the server part. |
+
+Setup in Cloudflare (Pages project → Settings):
+- **Bindings → R2 bucket:** variable name `PHOTOS`, bucket `rolamarco-photos`.
+- **Variables and Secrets:** a secret named `ADMIN_KEY` (at least 8 characters). It is the password for the private page.
+
+Limits (top of the function file): 2 GB per file and 60 GB in total, as a safety cap. Large files are sent in 10 MB pieces, so an interrupted upload continues where it stopped.
+
+In the bucket: `orig/` holds the untouched originals, `thumb/` the small previews, `meta/settings.json` the open/closed switches.
